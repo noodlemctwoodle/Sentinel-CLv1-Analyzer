@@ -1,5 +1,11 @@
 # Sentinel CLv1 Analyzer
 
+![PowerShell 7+](https://img.shields.io/badge/PowerShell-7.0%2B-blue?logo=powershell&logoColor=white)
+![Az.Accounts 2.13+](https://img.shields.io/badge/Az.Accounts-2.13%2B-0078D4?logo=microsoft-azure&logoColor=white)
+![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey)
+![License](https://img.shields.io/github/license/noodlemctwoodle/Sentinel-CLv1-Analyzer)
+![Solution Mapping Update](https://github.com/noodlemctwoodle/Sentinel-CLv1-Analyzer/actions/workflows/update-solution-mapping.yml/badge.svg)
+
 Discover, assess, and plan the migration of **classic custom log tables (CLv1)** in
 Microsoft Sentinel before the
 [HTTP Data Collector API retirement on **September 14, 2026**](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/custom-logs-migrate).
@@ -44,10 +50,33 @@ raise a Feature Request with your Microsoft CSAM / SSP.
 
 ## Requirements
 
-- PowerShell **7.0 or later** (uses null-coalescing operator and `ForEach-Object -Parallel`)
-- `Az.Accounts` **2.13.0 or later**
-- Read access to the target Sentinel workspace (Reader role is sufficient for
-  the discovery and impact scan; Security Reader for Content Hub queries)
+### Software
+
+| Prerequisite | Minimum version | Install |
+| --- | --- | --- |
+| PowerShell | **7.0** | `winget install Microsoft.PowerShell` (Windows) / `brew install powershell` (macOS) |
+| Az.Accounts module | **2.13.0** | `Install-Module Az.Accounts -MinimumVersion 2.13.0 -Scope CurrentUser` |
+
+### Azure RBAC permissions
+
+The script makes **read-only** ARM calls — it never modifies your workspace. The
+table below shows the minimum RBAC roles required for each step.
+
+| Step | API / Resource provider operation | Minimum role | Notes |
+| --- | --- | --- | --- |
+| **Authentication** | `Az.Accounts` token | Any role on the subscription | `Connect-AzAccount` must have an active context |
+| **Discover tables** | `Microsoft.OperationalInsights/workspaces/tables/read` | **Log Analytics Reader** | Lists all tables and schema metadata |
+| **Analytics Rules** | `Microsoft.SecurityInsights/alertRules/read` | **Microsoft Sentinel Reader** | Scans rule queries for table references |
+| **Hunting Queries** | `Microsoft.OperationalInsights/workspaces/savedSearches/read` | **Log Analytics Reader** | Includes hunting queries and parsers |
+| **Saved Searches** | `Microsoft.OperationalInsights/workspaces/savedSearches/read` | **Log Analytics Reader** | Same permission as hunting queries |
+| **Workbooks** | `Microsoft.Insights/workbooks/read` | **Workbook Reader** | Subscription-level query; may miss workbooks if scoped to RG only |
+| **Playbooks** | `Microsoft.Logic/workflows/read` | **Logic App Reader** | Reads Logic App definitions in the resource group |
+| **DCRs** | `Microsoft.Insights/dataCollectionRules/read` | **Monitoring Reader** | Scans DCR transform KQL for table references |
+| **Content Hub** | `Microsoft.SecurityInsights/contentPackages/read` | **Microsoft Sentinel Reader** | Lists installed and available Content Hub packages |
+
+> **Recommended**: Assign **Microsoft Sentinel Reader** + **Monitoring Reader** at the
+> resource group scope. This covers all steps with least-privilege access. No write
+> permissions are required.
 
 ## Usage
 
