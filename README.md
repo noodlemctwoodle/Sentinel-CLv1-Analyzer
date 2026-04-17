@@ -28,22 +28,38 @@ with confidence.
 
 ## What it does
 
-| Step | Description |
-| --- | --- |
-| **1. Discover** | Queries the workspace Tables API for all `CustomLog` / `Classic` tables and returns schema metadata (column count, retention, plan) |
-| **2. Assess impact** | Scans every Analytics Rule, Hunting Query, Parser, Saved Search, Workbook, SOAR Playbook (Logic App), and Data Collection Rule for references to each classic table |
-| **3. Map to Content Hub** | Matches each table to Content Hub solutions and classifies connectors as **CCF**, **AMA**, **Azure Functions**, **Platform**, **Agent**, or **Legacy** — so you know which connectors are modern and which need attention |
+### Step 1 — Discover classic tables
 
-### Connector classification
+Queries the workspace Tables API for all tables with `TableType = CustomLog` and
+`TableSubType = Classic`. Returns schema metadata including column count, retention
+period, and pricing plan for each table.
 
-| Kind | What it means | Action |
-| --- | --- | --- |
-| **CCF** | Codeless Connector Framework — modern, declarative | No migration needed |
-| **AMA** | Azure Monitor Agent based | No migration needed |
-| **Platform** | Microsoft-native (Azure AD, Office 365, Defender, etc.) | Platform-managed — no action |
-| **AzureFunctions** | Legacy serverless polling connector | Plan migration to CCF |
-| **Agent** | CEF / Syslog based collection | Review collection method |
-| **Legacy** | Anything else | Review manually |
+### Step 2 — Assess dependency impact
+
+For each classic table, scans the following content types for references:
+
+- **Analytics Rules** — scheduled and NRT detection queries
+- **Hunting Queries** — proactive threat hunting KQL
+- **Parsers** — workspace functions used for normalisation
+- **Saved Searches** — Log Analytics saved queries
+- **Workbooks** — full serialised JSON walk of all query steps
+- **SOAR Playbooks** — Logic App workflow definitions
+- **Data Collection Rules** — transform KQL in DCR pipelines
+
+Tables with more dependent items should be prioritised — migrating them requires
+updating every reference.
+
+### Step 3 — Map to Content Hub solutions
+
+Matches each table to Content Hub solutions and classifies the data connector
+feeding it:
+
+- **CCF** — Codeless Connector Framework (modern, declarative). No migration needed.
+- **AMA** — Azure Monitor Agent based. No migration needed.
+- **Platform** — Microsoft-native (Azure AD, Office 365, Defender, etc.). Platform-managed, no action required.
+- **AzureFunctions** — Legacy serverless polling connector. Plan migration to CCF.
+- **Agent** — CEF / Syslog based collection. Review collection method.
+- **Legacy** — Anything else. Review manually.
 
 Tables with **no Content Hub solution match** are flagged with a recommendation to
 raise a Feature Request with your Microsoft CSAM / SSP.
@@ -52,31 +68,34 @@ raise a Feature Request with your Microsoft CSAM / SSP.
 
 ### Software
 
-| Prerequisite | Minimum version | Install |
-| --- | --- | --- |
-| PowerShell | **7.0** | `winget install Microsoft.PowerShell` (Windows) / `brew install powershell` (macOS) |
-| Az.Accounts module | **2.13.0** | `Install-Module Az.Accounts -MinimumVersion 2.13.0 -Scope CurrentUser` |
+- **PowerShell 7.0+**
+  - Windows: `winget install Microsoft.PowerShell`
+  - macOS: `brew install powershell`
+  - Linux: [Install instructions](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-linux)
+- **Az.Accounts module 2.13.0+**
+  ```powershell
+  Install-Module Az.Accounts -MinimumVersion 2.13.0 -Scope CurrentUser
+  ```
 
 ### Azure RBAC permissions
 
-The script makes **read-only** ARM calls — it never modifies your workspace. The
-table below shows the minimum RBAC roles required for each step.
-
-| Step | API / Resource provider operation | Minimum role | Notes |
-| --- | --- | --- | --- |
-| **Authentication** | `Az.Accounts` token | Any role on the subscription | `Connect-AzAccount` must have an active context |
-| **Discover tables** | `Microsoft.OperationalInsights/workspaces/tables/read` | **Log Analytics Reader** | Lists all tables and schema metadata |
-| **Analytics Rules** | `Microsoft.SecurityInsights/alertRules/read` | **Microsoft Sentinel Reader** | Scans rule queries for table references |
-| **Hunting Queries** | `Microsoft.OperationalInsights/workspaces/savedSearches/read` | **Log Analytics Reader** | Includes hunting queries and parsers |
-| **Saved Searches** | `Microsoft.OperationalInsights/workspaces/savedSearches/read` | **Log Analytics Reader** | Same permission as hunting queries |
-| **Workbooks** | `Microsoft.Insights/workbooks/read` | **Workbook Reader** | Subscription-level query; may miss workbooks if scoped to RG only |
-| **Playbooks** | `Microsoft.Logic/workflows/read` | **Logic App Reader** | Reads Logic App definitions in the resource group |
-| **DCRs** | `Microsoft.Insights/dataCollectionRules/read` | **Monitoring Reader** | Scans DCR transform KQL for table references |
-| **Content Hub** | `Microsoft.SecurityInsights/contentPackages/read` | **Microsoft Sentinel Reader** | Lists installed and available Content Hub packages |
+The script makes **read-only** ARM calls — it never modifies your workspace.
 
 > **Recommended**: Assign **Microsoft Sentinel Reader** + **Monitoring Reader** at the
 > resource group scope. This covers all steps with least-privilege access. No write
 > permissions are required.
+
+Detailed permissions per step:
+
+- **Authentication** — `Connect-AzAccount` must have an active context with any role on the subscription.
+- **Discover tables** — `Microsoft.OperationalInsights/workspaces/tables/read` · **Log Analytics Reader**
+- **Analytics Rules** — `Microsoft.SecurityInsights/alertRules/read` · **Microsoft Sentinel Reader**
+- **Hunting Queries & Parsers** — `Microsoft.OperationalInsights/workspaces/savedSearches/read` · **Log Analytics Reader**
+- **Saved Searches** — same permission as hunting queries · **Log Analytics Reader**
+- **Workbooks** — `Microsoft.Insights/workbooks/read` · **Workbook Reader** (subscription-level query; may miss workbooks if scoped to RG only)
+- **Playbooks** — `Microsoft.Logic/workflows/read` · **Logic App Reader**
+- **DCRs** — `Microsoft.Insights/dataCollectionRules/read` · **Monitoring Reader**
+- **Content Hub** — `Microsoft.SecurityInsights/contentPackages/read` · **Microsoft Sentinel Reader**
 
 ## Usage
 
@@ -114,17 +133,15 @@ $result.SolutionMatches | Where-Object { $_.MatchCount -eq 0 }
 
 ## Output
 
-Each run writes four artefacts to `OutputPath`:
+Each run writes five artefacts to `OutputPath`:
 
-| File                    | Purpose                                                   |
-| ----------------------- | --------------------------------------------------------- |
-| `tables.csv`            | Discovered classic tables with schema metadata            |
-| `impact.csv`            | Flat list of every impacted content item, one row each    |
-| `solution-matches.csv`  | Table → Content Hub solution matches with install status  |
-| `report.json`           | Everything combined, suitable for further tooling         |
-| `report.html`           | Self-contained interactive HTML report                    |
+- **`tables.csv`** — Discovered classic tables with schema metadata
+- **`impact.csv`** — Flat list of every impacted content item, one row per dependency
+- **`solution-matches.csv`** — Table-to-Content Hub solution matches with install status
+- **`report.json`** — Everything combined in a single file, suitable for further tooling
+- **`report.html`** — Self-contained interactive HTML report (open in any browser)
 
-Plus the full `PSCustomObject` is returned to the pipeline.
+The full `PSCustomObject` is also returned to the pipeline for scripted use.
 
 ## Data source
 
@@ -140,14 +157,12 @@ end-to-end guided experience for running and interpreting the migration review.
 
 ### What the agent does
 
-| Capability | Detail |
-| --- | --- |
-| **Prerequisite checks** | Verifies PowerShell 7+ and Az.Accounts 2.13.0+ are installed, and guides you through installation if not |
-| **Parameter collection** | Presents an interactive dialog for Subscription ID, Resource Group, Workspace Name, and Output Path |
-| **Script execution** | Runs the script in non-interactive mode so you don't need to construct the command yourself |
-| **Result interpretation** | Explains which tables have the highest dependency impact and should be prioritised |
-| **Connector classification** | Describes the connector kind (CCF, AMA, Platform, AzureFunctions, Agent, Legacy) and recommended actions |
-| **Migration guidance** | Advises on next steps for each table, including the September 14 2026 HTTP Data Collector API retirement deadline |
+- **Prerequisite checks** — Verifies PowerShell 7+ and Az.Accounts 2.13.0+ are installed, and guides you through installation if not
+- **Parameter collection** — Presents an interactive dialog for Subscription ID, Resource Group, Workspace Name, and Output Path
+- **Script execution** — Runs the script in non-interactive mode so you don't need to construct the command yourself
+- **Result interpretation** — Explains which tables have the highest dependency impact and should be prioritised
+- **Connector classification** — Describes the connector kind (CCF, AMA, Platform, AzureFunctions, Agent, Legacy) and recommended actions
+- **Migration guidance** — Advises on next steps for each table, including the September 14 2026 HTTP Data Collector API retirement deadline
 
 ### How to use
 
