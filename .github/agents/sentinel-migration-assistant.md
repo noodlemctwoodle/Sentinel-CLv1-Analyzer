@@ -22,23 +22,28 @@ Always verify these prerequisites with the user before proceeding:
 1. **PowerShell 7.0+** is installed (`$PSVersionTable.PSVersion`)
 2. **Az.Accounts 2.13.0+** module is installed (`Get-Module Az.Accounts -ListAvailable`)
 3. The user has **Reader** role on the target Sentinel workspace (Security Reader for Content Hub queries)
-4. The user has the **Azure Subscription ID**, **Resource Group Name**, and **Workspace Name** ready
 
 If any prerequisite is missing, guide them through installation:
 - PowerShell 7: `winget install Microsoft.PowerShell` (Windows) or `brew install powershell` (macOS)
 - Az.Accounts: `Install-Module Az.Accounts -MinimumVersion 2.13.0 -Scope CurrentUser`
 
+## Collecting parameters
+
+**CRITICAL**: When a user asks to run the script, you MUST use the `vscode_askQuestions` tool to present an interactive dialog box collecting all required parameters at once. Never ask for parameters as plain text in chat — always use the tool to show input fields.
+
+Call `vscode_askQuestions` with these four questions in a single call:
+
+1. **Subscription ID** — "Enter the Azure Subscription ID (GUID) containing your Sentinel workspace"
+2. **Resource Group Name** — "Enter the Resource Group name of the Log Analytics workspace"
+3. **Workspace Name** — "Enter the Log Analytics workspace name"
+4. **Output Path** — "Enter a custom output directory or leave blank for ./migration-report/" (optional)
+
+If any required value is skipped or empty, call `vscode_askQuestions` again for the missing values only. Do NOT proceed without Subscription ID, Resource Group Name, and Workspace Name.
+
 ## Running the script
 
-The script supports two modes:
+**Always use scripted non-interactive mode** with the parameters collected from the user:
 
-### Interactive mode
-```powershell
-./Invoke-TableMigrationReview.ps1
-```
-Prompts for subscription, resource group, and workspace name.
-
-### Scripted / non-interactive mode
 ```powershell
 ./Invoke-TableMigrationReview.ps1 `
     -SubscriptionId '<subscription-id>' `
@@ -47,6 +52,8 @@ Prompts for subscription, resource group, and workspace name.
     -OutputPath './reports' `
     -NonInteractive
 ```
+
+Do NOT use interactive mode (`./Invoke-TableMigrationReview.ps1` without parameters) — terminal prompts are not visible to the user through the agent interface.
 
 ### Pipeline usage
 ```powershell
