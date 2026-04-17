@@ -46,6 +46,22 @@
         -OutputPath './reports/2026-04'
 
     Scripted mode — outputs all reports to ./reports/2026-04.
+
+.NOTES
+    Version: 0.1.0
+
+    Contributors:
+        Toby G      — Developer, Co-Designer, Tester
+                       https://github.com/noodlemctwoodle
+        Sreedhar A  — Co-Designer, Tester
+                       https://github.com/sreedharande
+
+    Data source:
+        Azure-Sentinel Solutions Analyzer
+        https://github.com/Azure/Azure-Sentinel/tree/master/Tools/Solutions%20Analyzer
+
+.LINK
+    https://github.com/noodlemctwoodle/Sentinel-CLv1-Analyzer
 #>
 [CmdletBinding()]
 param(
