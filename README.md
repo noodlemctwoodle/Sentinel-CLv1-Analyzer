@@ -93,6 +93,17 @@ The Content Hub solution mapping is shared with the Next.js web app
 `update-solution-mapping.yml` GitHub Action. Both tools stay in sync
 automatically.
 
+## Copilot Agent
+
+This repository includes a **GitHub Copilot custom agent** that guides you through
+deploying and running the script. In VS Code with Copilot enabled:
+
+1. Open this repository.
+2. Open Copilot Chat and select the **sentinel-migration-assistant** agent from the agent dropdown.
+3. Ask it to help you run the migration review — it will check prerequisites, walk you through parameters, and help interpret results.
+
+The agent profile lives at `.github/agents/sentinel-migration-assistant.md`.
+
 ## Troubleshooting
 
 **`InsufficientPermissions` on Content Hub query**
