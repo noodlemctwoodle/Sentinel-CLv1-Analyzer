@@ -1,9 +1,46 @@
-# Table Migration Review (PowerShell)
+# Sentinel CLv1 Analyzer
 
-PowerShell equivalent of the Table Migration Manager web app. Discovers classic V1
-custom log tables in a Microsoft Sentinel workspace, assesses dependency impact
-across all content types, and maps tables to Content Hub solutions with CCF /
-Azure Functions connector classification.
+Discover, assess, and plan the migration of **classic custom log tables (CLv1)** in
+Microsoft Sentinel before the
+[HTTP Data Collector API retirement on **September 14, 2026**](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/custom-logs-migrate).
+
+## Why this tool exists
+
+Microsoft Sentinel workspaces that ingest data via the **HTTP Data Collector API**
+(also known as the Log Analytics Data Collector API) store that data in **classic
+custom log tables** — identifiable by the `_CL` suffix and a `TableSubType` of
+`Classic`. These tables must be migrated to **DCR-based custom tables** before the
+API is retired.
+
+Migrating a table is not just a schema change. Analytics rules, hunting queries,
+workbooks, parsers, saved searches, SOAR playbooks, and data collection rules may
+all reference the table. Changing or removing a table without understanding these
+dependencies can silently break detections and response workflows.
+
+This tool automates the discovery and impact assessment so you can plan migrations
+with confidence.
+
+## What it does
+
+| Step | Description |
+| --- | --- |
+| **1. Discover** | Queries the workspace Tables API for all `CustomLog` / `Classic` tables and returns schema metadata (column count, retention, plan) |
+| **2. Assess impact** | Scans every Analytics Rule, Hunting Query, Parser, Saved Search, Workbook, SOAR Playbook (Logic App), and Data Collection Rule for references to each classic table |
+| **3. Map to Content Hub** | Matches each table to Content Hub solutions and classifies connectors as **CCF**, **AMA**, **Azure Functions**, **Platform**, **Agent**, or **Legacy** — so you know which connectors are modern and which need attention |
+
+### Connector classification
+
+| Kind | What it means | Action |
+| --- | --- | --- |
+| **CCF** | Codeless Connector Framework — modern, declarative | No migration needed |
+| **AMA** | Azure Monitor Agent based | No migration needed |
+| **Platform** | Microsoft-native (Azure AD, Office 365, Defender, etc.) | Platform-managed — no action |
+| **AzureFunctions** | Legacy serverless polling connector | Plan migration to CCF |
+| **Agent** | CEF / Syslog based collection | Review collection method |
+| **Legacy** | Anything else | Review manually |
+
+Tables with **no Content Hub solution match** are flagged with a recommendation to
+raise a Feature Request with your Microsoft CSAM / SSP.
 
 ## Requirements
 
@@ -60,32 +97,6 @@ Each run writes four artefacts to `OutputPath`:
 
 Plus the full `PSCustomObject` is returned to the pipeline.
 
-## The three steps
-
-1. **Discover** — Queries the workspace `tables` API for `CustomLog` / `Classic`
-   tables and returns schema metadata.
-
-2. **Assess impact** — For each classic table, scans every Analytics Rule,
-   Hunting Query, Parser, Saved Search, Workbook (full serialised JSON walk),
-   SOAR Playbook (Logic App definition), and DCR transform KQL for references.
-
-3. **Map to Content Hub** — Uses the static solution mapping
-   (`../src/lib/data/solution-mapping.json`, 826 tables → 495 solutions,
-   sourced from the [Azure-Sentinel Solutions Analyzer](https://github.com/Azure/Azure-Sentinel/tree/master/Tools/Solutions%20Analyzer)).
-   Each matched solution is classified by connector kind:
-
-   | Kind             | Indicator                                                    | Recommendation |
-   | ---------------- | ------------------------------------------------------------ | -------------- |
-   | `CCF`            | Connector ID ends in `CCP` / `CCF` / `Definition`           | Modern — preferred |
-   | `AzureFunctions` | Name contains `Serverless` / `AzureFunction` / `Polling`    | Legacy — migrate to CCF |
-   | `AMA`            | Name ends in `Ama`                                           | Modern — preferred |
-   | `Platform`       | Microsoft-native (`Azure*`, `Office*`, `Defender*`, …)      | Platform-managed |
-   | `Agent`          | `CEF` / `Syslog`                                             | Agent-based |
-   | `Legacy`         | Anything else                                                | Review manually |
-
-   If no solution matches a table at all, the report flags it with a
-   recommendation to raise a Feature Request with your CSAM / SSP.
-
 ## Data source
 
 The Content Hub solution mapping is shared with the Next.js web app
@@ -93,14 +104,43 @@ The Content Hub solution mapping is shared with the Next.js web app
 `update-solution-mapping.yml` GitHub Action. Both tools stay in sync
 automatically.
 
-## Copilot Agent
+## Copilot Agent — `sentinel-migration-assistant`
 
-This repository includes a **GitHub Copilot custom agent** that guides you through
-deploying and running the script. In VS Code with Copilot enabled:
+This repository includes a **GitHub Copilot custom agent** that provides an
+end-to-end guided experience for running and interpreting the migration review.
 
-1. Open this repository.
-2. Open Copilot Chat and select the **sentinel-migration-assistant** agent from the agent dropdown.
-3. Ask it to help you run the migration review — it will check prerequisites, walk you through parameters, and help interpret results.
+### What the agent does
+
+| Capability | Detail |
+| --- | --- |
+| **Prerequisite checks** | Verifies PowerShell 7+ and Az.Accounts 2.13.0+ are installed, and guides you through installation if not |
+| **Parameter collection** | Presents an interactive dialog for Subscription ID, Resource Group, Workspace Name, and Output Path |
+| **Script execution** | Runs the script in non-interactive mode so you don't need to construct the command yourself |
+| **Result interpretation** | Explains which tables have the highest dependency impact and should be prioritised |
+| **Connector classification** | Describes the connector kind (CCF, AMA, Platform, AzureFunctions, Agent, Legacy) and recommended actions |
+| **Migration guidance** | Advises on next steps for each table, including the September 14 2026 HTTP Data Collector API retirement deadline |
+
+### How to use
+
+1. Open this repository in VS Code with GitHub Copilot enabled.
+2. Open **Copilot Chat** (`Ctrl+Shift+I` / `Cmd+Shift+I`).
+3. Select the **sentinel-migration-assistant** agent from the agent picker (or type `@sentinel-migration-assistant`).
+4. Ask it to run the migration review — for example:
+   - *"Help me run the migration review"*
+   - *"Check my workspace for classic custom log tables"*
+   - *"What tables need migrating?"*
+
+The agent will walk you through the full workflow: prerequisites → parameters → execution → results.
+
+### Example conversation
+
+```
+You:   Help me run the migration review
+Agent: [checks PowerShell version and Az.Accounts module]
+Agent: [shows interactive dialog for workspace parameters]
+Agent: [runs Invoke-TableMigrationReview.ps1 in non-interactive mode]
+Agent: Found 2 classic tables. OfficeActivity_CL has 1 dependent item…
+```
 
 The agent profile lives at `.github/agents/sentinel-migration-assistant.md`.
 
@@ -117,3 +157,17 @@ the workspace. Token is refreshed automatically on each REST call.
 **Workbooks API returns nothing**
 The subscription-level query requires `Microsoft.Insights/workbooks/read`. If
 you're scoped to RG-only, workbooks may be missed.
+
+## Accreditations
+
+| Contributor | Role | GitHub |
+| --- | --- | --- |
+| **Toby G** | Developer, Co-Designer, Tester | [@noodlemctwoodle](https://github.com/noodlemctwoodle) |
+| **Sreedhar A** | Co-Designer, Tester | [@sreedharande](https://github.com/sreedharande) |
+
+### Data source
+
+The Content Hub solution mapping is derived from the
+[Azure-Sentinel Solutions Analyzer](https://github.com/Azure/Azure-Sentinel/tree/master/Tools/Solutions%20Analyzer)
+maintained by the Microsoft Sentinel team. The mapping is refreshed weekly via
+GitHub Actions to stay current with upstream changes.
