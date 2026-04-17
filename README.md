@@ -188,6 +188,14 @@ Agent: Found 2 classic tables. OfficeActivity_CL has 1 dependent item…
 
 The agent profile lives at `.github/agents/sentinel-migration-assistant.md`.
 
+## Contributing
+
+This project ships Copilot configuration to help contributors work effectively:
+
+- [`.github/copilot-instructions.md`](.github/copilot-instructions.md) — Global Copilot context covering architecture, domain knowledge, coding conventions, and guardrails
+- [`.github/instructions/powershell.instructions.md`](.github/instructions/powershell.instructions.md) — PowerShell-specific coding standards (applied automatically to `*.ps1` files)
+- [`.github/agents/sentinel-migration-assistant.md`](.github/agents/sentinel-migration-assistant.md) — Custom Copilot agent for guided script execution
+
 ## Troubleshooting
 
 **`InsufficientPermissions` on Content Hub query**
