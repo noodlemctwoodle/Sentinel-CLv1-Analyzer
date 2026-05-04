@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-27",
+  "generatedAt": "2026-05-04",
   "sourceUrl": "https://github.com/Azure/Azure-Sentinel/tree/master/Tools/Solutions%20Analyzer",
-  "tableCount": 826,
+  "tableCount": 830,
   "solutionCount": 495,
   "tablesToSolutions": {
     "OnePasswordEventLogs_CL": [
@@ -76,8 +76,7 @@
     ],
     "Event": [
       "ALC-WebCTRL",
-      "Microsoft Exchange Security - Exchange On-Premises",
-      "MimecastTIRegional"
+      "Microsoft Exchange Security - Exchange On-Premises"
     ],
     "ARGOS_CL": [
       "ARGOSCloudSecurity"
@@ -227,6 +226,14 @@
       "Alibaba Cloud ActionTrail"
     ],
     "AlsidForADLog_CL": [
+      "Alsid For AD"
+    ],
+    "Tenable_IE_CL": [
+      "Alsid For AD",
+      "Tenable App",
+      "TenableAD"
+    ],
+    "Tenable_ad_CL": [
       "Alsid For AD",
       "Tenable App",
       "TenableAD"
@@ -1385,9 +1392,6 @@
     "GitHubAuditLogPolling_CL": [
       "GitHub"
     ],
-    "ImpactedUser": [
-      "GitHub"
-    ],
     "githubscanaudit_CL": [
       "GitHub"
     ],
@@ -1755,6 +1759,15 @@
       "Microsoft 365"
     ],
     "FinanceOperationsActivity_CL": [
+      "Microsoft Business Applications"
+    ],
+    "DataverseActivity": [
+      "Microsoft Business Applications"
+    ],
+    "PowerAutomateActivity": [
+      "Microsoft Business Applications"
+    ],
+    "PowerPlatformAdminActivity": [
       "Microsoft Business Applications"
     ],
     "CopilotActivity": [
@@ -2244,6 +2257,12 @@
     "Rubrik_ThreatHunt_Data_CL": [
       "RubrikSecurityCloud"
     ],
+    "ABAPAuditLog_CL": [
+      "SAP"
+    ],
+    "ABAPChangeDocsLog_CL": [
+      "SAP"
+    ],
     "SAPBTPAuditLog_CL": [
       "SAP BTP"
     ],
@@ -2448,9 +2467,6 @@
     "Cymru_Scout_IP_Data_x509_CL": [
       "Team Cymru Scout"
     ],
-    "Tenable_IE_CL": [
-      "Tenable App"
-    ],
     "Tenable_VM_Asset_CL": [
       "Tenable App"
     ],
@@ -2465,9 +2481,6 @@
     ],
     "Tenable_WAS_Vuln_CL": [
       "Tenable App"
-    ],
-    "Tenable_ad_CL": [
-      "TenableAD"
     ],
     "Tenable_IO_Assets_CL": [
       "TenableIO"
