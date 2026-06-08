@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-06-01",
+  "generatedAt": "2026-06-08",
   "sourceUrl": "https://github.com/Azure/Azure-Sentinel/tree/master/Tools/Solutions%20Analyzer",
-  "tableCount": 910,
-  "solutionCount": 522,
+  "tableCount": 960,
+  "solutionCount": 524,
   "tablesToSolutions": {
     "OnePasswordEventLogs_CL": [
       "1Password"
@@ -11,12 +11,13 @@
       "42Crunch API Protection"
     ],
     "": [
-      "A365 Observability",
+      "42Crunch API Protection",
       "AWS Systems Manager",
       "AWSAthena",
       "AWS_IAM",
       "AbuseIPDB",
       "Acronis Cyber Protect Cloud",
+      "Agent 365",
       "Alibaba Cloud Networking",
       "Apache Log4j Vulnerability Detection",
       "Attacker Tools Threat Protection Essentials",
@@ -32,6 +33,8 @@
       "Cloud Service Threat Protection Essentials",
       "ContinuousDiagnostics&Mitigation",
       "CybersecurityMaturityModelCertification(CMMC)2.0",
+      "Cyren-CrowdStrike-ThreatIntelligence",
+      "Cyren-Defender-ThreatIntelligence",
       "Cyren-SentinelOne-ThreatIntelligence",
       "Cyware",
       "DEV-0537DetectionandHunting",
@@ -57,6 +60,7 @@
       "HIPAA Compliance",
       "HYAS",
       "HoneyTokens",
+      "Hybrid Attack - Cloud & Identity",
       "IPQualityScore",
       "Illusive Active Defense",
       "InsightVM",
@@ -124,8 +128,7 @@
       "Web Session Essentials",
       "Web Shells Threat Protection",
       "ZeroTrust(TIC3.0)",
-      "Zinc Open Source",
-      "archTIS"
+      "Zinc Open Source"
     ],
     "CommonSecurityLog": [
       "AI Analyst Darktrace",
@@ -249,6 +252,9 @@
     "ABNORMAL_SECURITY_CASE_CL": [
       "AbnormalSecurity"
     ],
+    "ABNORMAL_SECURITY_LOGS_CL": [
+      "AbnormalSecurity"
+    ],
     "ABNORMAL_SECURITY_POSTURE_CHANGE_CL": [
       "AbnormalSecurity"
     ],
@@ -261,9 +267,6 @@
     "ABNORMAL_SECURITY_VENDOR_CASE_CL": [
       "AbnormalSecurity"
     ],
-    "AbnormalSecurityLogs_CL": [
-      "AbnormalSecurity"
-    ],
     "agari_apdpolicy_log_CL": [
       "Agari"
     ],
@@ -273,8 +276,32 @@
     "agari_bpalerts_log_CL": [
       "Agari"
     ],
+    "AgariAPDPolicyLog_CL": [
+      "Agari"
+    ],
+    "AgariAPDTCLog_CL": [
+      "Agari"
+    ],
+    "AgariAPRInvestigationsLog_CL": [
+      "Agari"
+    ],
+    "AgariBPAlertsLog_CL": [
+      "Agari"
+    ],
+    "AgariBPThreatFeedSubs_CL": [
+      "Agari"
+    ],
     "InfoSecAnalytics_CL": [
       "AgileSec Analytics Connector"
+    ],
+    "AirlockDigitalExecutionHistories_CL": [
+      "AirlockDigital"
+    ],
+    "AirlockDigitalFileActivitySummary_CL": [
+      "AirlockDigital"
+    ],
+    "AirlockDigitalServerActivities_CL": [
+      "AirlockDigital"
     ],
     "AliCloud_CL": [
       "Alibaba Cloud"
@@ -283,14 +310,6 @@
       "Alibaba Cloud ActionTrail"
     ],
     "AlsidForADLog_CL": [
-      "Alsid For AD"
-    ],
-    "Tenable_IE_CL": [
-      "Alsid For AD",
-      "Tenable App",
-      "TenableAD"
-    ],
-    "Tenable_ad_CL": [
       "Alsid For AD",
       "Tenable App",
       "TenableAD"
@@ -544,6 +563,36 @@
     "BitsightObservation_statistics_CL": [
       "BitSight"
     ],
+    "BitSightAlerts_CL": [
+      "BitSight"
+    ],
+    "BitSightBreaches_CL": [
+      "BitSight"
+    ],
+    "BitSightCompanyDetails_CL": [
+      "BitSight"
+    ],
+    "BitSightCompanyRatingDetails_CL": [
+      "BitSight"
+    ],
+    "BitSightDiligenceHistoricalStatistics_CL": [
+      "BitSight"
+    ],
+    "BitSightDiligenceStatistics_CL": [
+      "BitSight"
+    ],
+    "BitSightFindingsSummary_CL": [
+      "BitSight"
+    ],
+    "BitSightObservationStatistics_CL": [
+      "BitSight"
+    ],
+    "BitsightIndustrialStatistics_CL": [
+      "BitSight"
+    ],
+    "BitsightVulnerabilitiesFindingsSummary_CL": [
+      "BitSight"
+    ],
     "BitglassLogs_CL": [
       "Bitglass"
     ],
@@ -560,6 +609,21 @@
       "Blacklens"
     ],
     "BHEAttackPathsData_CL": [
+      "BloodHound Enterprise"
+    ],
+    "BHEAttackPathsTimelineData_CL": [
+      "BloodHound Enterprise"
+    ],
+    "BHEAuditLogsData_CL": [
+      "BloodHound Enterprise"
+    ],
+    "BHEFindingTrendsData_CL": [
+      "BloodHound Enterprise"
+    ],
+    "BHEPostureHistoryData_CL": [
+      "BloodHound Enterprise"
+    ],
+    "BHETierZeroAssetsData_CL": [
       "BloodHound Enterprise"
     ],
     "BoxEventsV2_CL": [
@@ -648,6 +712,36 @@
     "meraki_CL": [
       "CiscoMeraki",
       "CustomLogsAma"
+    ],
+    "CiscoUmbrellaAdminAudit_CL": [
+      "CiscoUmbrella"
+    ],
+    "CiscoUmbrellaCloudFirewall_CL": [
+      "CiscoUmbrella"
+    ],
+    "CiscoUmbrellaDLP_CL": [
+      "CiscoUmbrella"
+    ],
+    "CiscoUmbrellaDNS_CL": [
+      "CiscoUmbrella"
+    ],
+    "CiscoUmbrellaFileEvent_CL": [
+      "CiscoUmbrella"
+    ],
+    "CiscoUmbrellaIPS_CL": [
+      "CiscoUmbrella"
+    ],
+    "CiscoUmbrellaRemoteAccessVPN_CL": [
+      "CiscoUmbrella"
+    ],
+    "CiscoUmbrellaWebTraffic_CL": [
+      "CiscoUmbrella"
+    ],
+    "CiscoUmbrellaZeroTrustAccessFlow_CL": [
+      "CiscoUmbrella"
+    ],
+    "CiscoUmbrellaZeroTrustAccess_CL": [
+      "CiscoUmbrella"
     ],
     "Cisco_Umbrella_audit_CL": [
       "CiscoUmbrella"
@@ -1484,6 +1578,9 @@
     "ElasticAgentLogs_CL": [
       "ElasticAgent"
     ],
+    "ElasticAgentLogsV2_CL": [
+      "ElasticAgent"
+    ],
     "ErmesBrowserSecurityEvents_CL": [
       "Ermes Browser Security"
     ],
@@ -1787,6 +1884,9 @@
     "IllumioInsightsSummary_CL": [
       "Illumio Insight"
     ],
+    "IllumioInsightsGraph_CL": [
+      "Illumio Insight"
+    ],
     "Illumio_Auditable_Events_CL": [
       "IllumioSaaS"
     ],
@@ -2076,21 +2176,6 @@
     "NCProtectUAL_CL": [
       "NC Protect Data Connector"
     ],
-    "BSMmacOS_CL": [
-      "NXLog BSM macOS"
-    ],
-    "NXLogFIM_CL": [
-      "NXLog FIM"
-    ],
-    "LinuxAudit_CL": [
-      "NXLog LinuxAudit"
-    ],
-    "AIX_Audit_CL": [
-      "NXLogAixAudit"
-    ],
-    "NXLog_DNS_Server_CL": [
-      "NXLogDNSLogs"
-    ],
     "Netclean_Incidents_CL": [
       "NetClean ProActive"
     ],
@@ -2190,6 +2275,9 @@
     "NordPassEventLogs_CL": [
       "NordPass"
     ],
+    "NordStellar_CL": [
+      "NordStellar"
+    ],
     "ObsidianActivity_CL": [
       "Obsidian Datasharing"
     ],
@@ -2238,10 +2326,10 @@
     "OpenSystemsZtnaLogs_CL": [
       "Open Systems"
     ],
-    "OpenAIAuditLogs_CL": [
+    "ASimAgentEventLogs": [
       "OpenAI"
     ],
-    "OpenAIChatCompletions_CL": [
+    "OpenAIAuditLogs_CL": [
       "OpenAI"
     ],
     "OCI_LogsV2_CL": [
@@ -2367,6 +2455,12 @@
     "RedCanaryDetections_CL": [
       "Red Canary"
     ],
+    "RedSiftAuth_CL": [
+      "Red Sift"
+    ],
+    "RedSiftEmailForensics_CL": [
+      "Red Sift"
+    ],
     "RubrikProtectionStatus_CL": [
       "RubrikSecurityCloud"
     ],
@@ -2386,6 +2480,15 @@
       "SAP"
     ],
     "ABAPChangeDocsLog_CL": [
+      "SAP"
+    ],
+    "ABAPAuthorizationDetails_CL": [
+      "SAP"
+    ],
+    "ABAPUserDetails_CL": [
+      "SAP"
+    ],
+    "SentinelHealth": [
       "SAP"
     ],
     "SAPBTPAuditLog_CL": [
@@ -2414,6 +2517,18 @@
     ],
     "SailPointIDN_Triggers_CL": [
       "SailPointIdentityNow"
+    ],
+    "SailPointIDN_EventsV2_CL": [
+      "SailPointIdentityNow"
+    ],
+    "SalesForceRealTimeEventMonitoring_CL": [
+      "Salesforce Service Cloud"
+    ],
+    "SalesforceAuditTrail": [
+      "Salesforce Service Cloud"
+    ],
+    "SalesforceLoginHistory": [
+      "Salesforce Service Cloud"
     ],
     "SalesforceServiceCloudV2_CL": [
       "Salesforce Service Cloud"
@@ -2547,6 +2662,9 @@
     "Sonrai_Tickets_CL": [
       "SonraiSecurity"
     ],
+    "SonraiSecurityTickets_CL": [
+      "SonraiSecurity"
+    ],
     "SophosCloudOptix_CL": [
       "Sophos Cloud Optix"
     ],
@@ -2561,6 +2679,21 @@
     ],
     "secRMM_CL": [
       "Squadra Technologies SecRmm"
+    ],
+    "StriderShieldEmailAddresses_CL": [
+      "Strider Shield"
+    ],
+    "StriderShieldEmailDomains_CL": [
+      "Strider Shield"
+    ],
+    "StriderShieldRiskSignalsDefinitions_CL": [
+      "Strider Shield"
+    ],
+    "StriderShieldRiskSignals_CL": [
+      "Strider Shield"
+    ],
+    "StriderShieldTerms_CL": [
+      "Strider Shield"
     ],
     "StyxViewAlerts_CL": [
       "Styx Intelligence"
@@ -2649,6 +2782,9 @@
     "Cymru_Scout_IP_Data_x509_CL": [
       "Team Cymru Scout"
     ],
+    "Tenable_IE_CL": [
+      "Tenable App"
+    ],
     "Tenable_VM_Asset_CL": [
       "Tenable App"
     ],
@@ -2663,6 +2799,9 @@
     ],
     "Tenable_WAS_Vuln_CL": [
       "Tenable App"
+    ],
+    "Tenable_ad_CL": [
+      "TenableAD"
     ],
     "Tenable_IO_Assets_CL": [
       "TenableIO"
@@ -2738,6 +2877,12 @@
     ],
     "VMware_VECO_EventLogs_CL": [
       "VMware SASE"
+    ],
+    "VMwareWorkspaceOneDeviceApps_CL": [
+      "VMware Workspace ONE"
+    ],
+    "VMwareWorkspaceOneDevices_CL": [
+      "VMware Workspace ONE"
     ],
     "Vaikora_AgentSignals_CL": [
       "Vaikora-Sentinel"
@@ -3025,6 +3170,12 @@
     "ZNRPCActivity_CL": [
       "ZeroNetworks"
     ],
+    "ZimperiumMitigationLogV2_CL": [
+      "Zimperium Mobile Threat Defense"
+    ],
+    "ZimperiumThreatLogV2_CL": [
+      "Zimperium Mobile Threat Defense"
+    ],
     "ZimperiumMitigationLog_CL": [
       "Zimperium Mobile Threat Defense"
     ],
@@ -3051,11 +3202,6 @@
       "publisherId": "42crunch1580391915541",
       "offerId": "42crunch_sentinel_solution",
       "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/42Crunch%20API%20Protection"
-    },
-    "A365 Observability": {
-      "publisherId": "azuresentinel",
-      "offerId": "azure-sentinel-solution-a365observability",
-      "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/A365%20Observability"
     },
     "AI Analyst Darktrace": {
       "publisherId": "darktrace1655286944672",
@@ -3138,14 +3284,24 @@
       "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/Acronis%20Cyber%20Protect%20Cloud"
     },
     "Agari": {
-      "publisherId": "agari",
-      "offerId": "Agari_MSS",
+      "publisherId": "azuresentinel",
+      "offerId": "azure-sentinel-solution-agari",
       "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/Agari"
+    },
+    "Agent 365": {
+      "publisherId": "azuresentinel",
+      "offerId": "azure-sentinel-solution-a365observability",
+      "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/Agent%20365"
     },
     "AgileSec Analytics Connector": {
       "publisherId": "infosecglobal1632846037582",
       "offerId": "agilesec-analytics-connector",
       "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/AgileSec%20Analytics%20Connector"
+    },
+    "AirlockDigital": {
+      "publisherId": "azuresentinel",
+      "offerId": "azure-sentinel-solution-airlockdigital",
+      "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/AirlockDigital"
     },
     "Akamai Security Events": {
       "publisherId": "azuresentinel",
@@ -3752,6 +3908,16 @@
       "offerId": "cynerio-medical-device-security-sentinel-connector",
       "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/Cynerio"
     },
+    "Cyren-CrowdStrike-ThreatIntelligence": {
+      "publisherId": "data443riskmitigationinc1761580347231",
+      "offerId": "azure-sentinel-solution-cyren-cs-ioc-automation",
+      "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/Cyren-CrowdStrike-ThreatIntelligence"
+    },
+    "Cyren-Defender-ThreatIntelligence": {
+      "publisherId": "data443riskmitigationinc1761580347231",
+      "offerId": "azure-sentinel-solution-cyren-defender-ti",
+      "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/Cyren-Defender-ThreatIntelligence"
+    },
     "Cyren-SentinelOne-ThreatIntelligence": {
       "publisherId": "data443riskmitigationinc1761580347231",
       "offerId": "azure-sentinel-solution-cyren-s1-ioc-automation",
@@ -4166,6 +4332,8 @@
       "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/GoogleCloudPlatformSQL"
     },
     "GoogleDirectory": {
+      "publisherId": "azuresentinel",
+      "offerId": "azure-sentinel-solution-gd",
       "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/GoogleDirectory"
     },
     "GoogleWorkspaceReports": {
@@ -4213,6 +4381,9 @@
     },
     "HoneyTokens": {
       "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/HoneyTokens"
+    },
+    "Hybrid Attack - Cloud & Identity": {
+      "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/Hybrid%20Attack%20-%20Cloud%20%26%20Identity"
     },
     "IONIX": {
       "publisherId": "cyberpion1597832716616",
@@ -4615,31 +4786,6 @@
       "offerId": "azure-sentinel-solution-nistsp80053",
       "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/NISTSP80053"
     },
-    "NXLog BSM macOS": {
-      "publisherId": "nxlogltd1589381969261",
-      "offerId": "nxlog_bsm_macos_mss",
-      "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/NXLog%20BSM%20macOS"
-    },
-    "NXLog FIM": {
-      "publisherId": "nxlogltd1589381969261",
-      "offerId": "nxlog_fim",
-      "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/NXLog%20FIM"
-    },
-    "NXLog LinuxAudit": {
-      "publisherId": "nxlogltd1589381969261",
-      "offerId": "nxlog_linuxaudit_mss",
-      "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/NXLog%20LinuxAudit"
-    },
-    "NXLogAixAudit": {
-      "publisherId": "nxlogltd1589381969261",
-      "offerId": "nxlog_aix_audit",
-      "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/NXLogAixAudit"
-    },
-    "NXLogDNSLogs": {
-      "publisherId": "nxlogltd1589381969261",
-      "offerId": "nxlog_dns_logs",
-      "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/NXLogDnsLogs"
-    },
     "Nasuni": {
       "publisherId": "nasunicorporation",
       "offerId": "nasuni-sentinel",
@@ -4699,6 +4845,11 @@
       "publisherId": "nordsecurityinc",
       "offerId": "azure-sentinel-solution-nordpass",
       "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/NordPass"
+    },
+    "NordStellar": {
+      "publisherId": "nordsecurityinc",
+      "offerId": "azure-sentinel-solution-nordstellar",
+      "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/NordStellar"
     },
     "NozomiNetworks": {
       "publisherId": "azuresentinel",
@@ -4936,6 +5087,11 @@
       "offerId": "microsoft-sentinel-solution-RedCanary",
       "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/Red%20Canary"
     },
+    "Red Sift": {
+      "publisherId": "redsift",
+      "offerId": "redsift-sentinel-events",
+      "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/Red%20Sift"
+    },
     "ReversingLabs": {
       "publisherId": "reversinglabs1597673283347",
       "offerId": "rl_offer_content_hub_aoae",
@@ -4957,6 +5113,8 @@
       "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/RubrikSecurityCloud"
     },
     "SAP": {
+      "publisherId": "sentinel4sap",
+      "offerId": "sentinel4sap",
       "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/SAP"
     },
     "SAP BTP": {
@@ -5015,8 +5173,8 @@
       "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/SOX%20IT%20Compliance"
     },
     "SailPointIdentityNow": {
-      "publisherId": "sailpoint1582673310610",
-      "offerId": "sentinel_offering",
+      "publisherId": "azuresentinel",
+      "offerId": "azure-sentinel-solution-sailpointidentitynow",
       "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/SailPointIdentityNow"
     },
     "SalemCyber": {
@@ -5168,6 +5326,11 @@
       "publisherId": "azuresentinel",
       "offerId": "azure-sentinel-solution-squidproxy",
       "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/SquidProxy"
+    },
+    "Strider Shield": {
+      "publisherId": "nvisocvba1591630627500",
+      "offerId": "nviso-strider-shield-azure-sentinel-solution",
+      "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/Strider%20Shield"
     },
     "Styx Intelligence": {
       "publisherId": "styx_intelligence",
@@ -5388,6 +5551,11 @@
       "offerId": "azure-sentinel-solution-vmwaresase",
       "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/VMware%20SD-WAN%20and%20SASE"
     },
+    "VMware Workspace ONE": {
+      "publisherId": "azuresentinel",
+      "offerId": "azure-sentinel-solution-vmware-workspace-one",
+      "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/VMware%20Workspace%20ONE"
+    },
     "VMware vCenter": {
       "publisherId": "azuresentinel",
       "offerId": "azure-sentinel-solution-vcenter",
@@ -5410,7 +5578,7 @@
     },
     "VaikoraSecurityCenter": {
       "publisherId": "data443riskmitigationinc1761580347231",
-      "offerId": "azure-sentinel-solution-vaikora-azure-security-center",
+      "offerId": "vaikora-security-center-connector",
       "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/Vaikora-AzureSecurityCenter"
     },
     "Valence Security": {
@@ -5607,9 +5775,6 @@
       "publisherId": "azuresentinel",
       "offerId": "azure-sentinel-solution-zscalerprivateaccess",
       "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/Zscaler%20Private%20Access%20%28ZPA%29"
-    },
-    "archTIS": {
-      "githubUrl": "https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/archTIS"
     },
     "iboss": {
       "publisherId": "iboss",
