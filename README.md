@@ -1,3 +1,18 @@
+> [!IMPORTANT]
+> **This project has been archived and has moved.**
+>
+> The CLv1 Analyzer is now part of **Sentinel-As-Code**, where it is the assess
+> stage of the ClassicToDcr migration toolkit:
+>
+> **https://github.com/noodlemctwoodle/Sentinel-As-Code/tree/main/Tools/ClassicToDcr**
+>
+> Development continues there. It has since gained transitive dependency
+> resolution, which finds content that reaches a classic table only through a
+> parser function and so never names the table, plus a ready to run migration
+> command in the HTML report.
+>
+> This repository is kept for history only and will not receive further updates.
+
 # Sentinel CLv1 Analyzer
 
 ![PowerShell 7+](https://img.shields.io/badge/PowerShell-7.0%2B-blue?logo=powershell&logoColor=white)
